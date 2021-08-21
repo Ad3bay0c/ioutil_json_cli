@@ -40,14 +40,14 @@ func main() {
 	// fmt.Println("............Testing Done......")
 
 	// time.Sleep(time.Second * 2)
-	// cli.Lst.Done(1)
+	// cli.Lst.Done(4)
 	// cli.Lst.Done(6)
 	// cli.Lst.All()
 
 	// fmt.Println("............Testing Undone........")
 	// cli.Lst.Undone(1)
 
-	cli.Lst.All()
+	// cli.Lst.All()
 
 	// time.Sleep(time.Second * 2)
 
@@ -56,7 +56,7 @@ func main() {
 	// time.Sleep(time.Second * 1)
 	// cli.Lst.Cleanup()
 
-	// cli.Lst.All()
+	cli.Lst.All()
 
 	// cli.CliTest()
 

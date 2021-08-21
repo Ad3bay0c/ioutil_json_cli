@@ -83,7 +83,7 @@ func (lists *Lists) Cleanup() {
 	for idx, val := range lists.Lists {
 		if val.Done && idx < len(lists.Lists)-1 {
 			lists.Lists = append(lists.Lists[:idx], lists.Lists[idx+1:]...)
-		} else {
+		} else if val.Done && idx == len(lists.Lists)-1{
 			lists.Lists = lists.Lists[:idx]
 		}
 	}
