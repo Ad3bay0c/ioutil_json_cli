@@ -40,25 +40,31 @@ func main() {
 	// fmt.Println("............Testing Done......")
 
 	// time.Sleep(time.Second * 2)
-	// cli.Lst.Done(4)
-	// cli.Lst.Done(6)
+	// cli.Lst.Done(2)
+	// cli.Lst.Done(1)
 	// cli.Lst.All()
 
 	// fmt.Println("............Testing Undone........")
 	// cli.Lst.Undone(1)
+	// cli.Lst.Undone(3)
+	// cli.Lst.Undone(4)
 
 	// cli.Lst.All()
 
 	// time.Sleep(time.Second * 2)
 
 	// fmt.Println("............Testing Clean Up........")
-	// cli.Lst.Done(2)
+	// cli.Lst.Done(4)
 	// time.Sleep(time.Second * 1)
-	// cli.Lst.Cleanup()
+	cli.Lst.Cleanup()
 
 	cli.Lst.All()
 
 	// cli.CliTest()
 
 	// files.File()
+
+	// temp.TemplateT()
+
+	// template_package.TemplateTesting()
 }
