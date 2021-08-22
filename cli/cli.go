@@ -54,7 +54,7 @@ func (lists Lists) All() {
 
 	todoTmpl += "{{if $todo.Done}}{{else}}"
 
-	todoTmpl += "{{increment $idx }}. {{ $todo.Content}} - {{date $todo.Date}}\n"
+	todoTmpl += "{{increment $idx }}. {{ $todo.Content}} - ({{date $todo.Date}})\n"
 	todoTmpl += "{{end}}{{end}}{{end}}"
 
 	tmpl := template.Must(template.New("todo").Funcs(funcMap).Parse(todoTmpl))
