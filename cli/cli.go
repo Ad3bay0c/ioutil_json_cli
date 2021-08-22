@@ -3,20 +3,22 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io/ioutil"
+	"os"
 	"time"
 )
 
 const FILENAME = "file.csv"
 
 type List struct {
-	Content string
-	Done    bool
-	Date    int64
+	Content string	`json:"content"`
+	Done    bool	`json:"done"`
+	Date    int64	`json:"date"`
 }
 
 type Lists struct {
-	Lists []List
+	Lists []List	`json:"lists"`
 }
 
 var Lst = Lists{}
@@ -30,33 +32,52 @@ func loadTodoList() {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	_ = json.Unmarshal(file, &Lst)
 }
 
 func (lists Lists) All() {
-	var i = 0
+	// var i = 0
 	if len(lists.Lists) == 0 {
 		fmt.Println("Empty List, Please Add Content")
 	}
 
-	for _, val := range lists.Lists {
-		if val.Done {
-			continue
-		}
-		i += 1
-		fmt.Printf("%d. %s - %v\n", i, val.Content, time.Unix(val.Date, 64).Format("Mon, 02 Jan 2006 15:04:05"))
+	funcMap := template.FuncMap{
+		"increment": func(i int) int {
+			return i + 1
+		},
+		"date": func(timeInt int64) string {
+			return time.Unix(timeInt, 0).Format("Mon, 02 Jan 2006 15:04:05")
+		},
 	}
+	todoTmpl := "{{with .Lists}}{{range $idx, $todo := .}}"
+
+	todoTmpl += "{{if $todo.Done}}{{else}}"
+
+	todoTmpl += "{{increment $idx }}. {{ $todo.Content}} - {{date $todo.Date}}\n"
+	todoTmpl += "{{end}}{{end}}{{end}}"
+
+	tmpl := template.Must(template.New("todo").Funcs(funcMap).Parse(todoTmpl))
+	tmpl.Execute(os.Stdout, lists)
+
+	// for idx, val := range lists.Lists {
+	// 	if val.Done {
+	// 		continue
+	// 	}
+	// 	idx += 1
+	// 	fmt.Printf("%d. %s - %v\n", idx, val.Content, time.Unix(val.Date, 64).Format("Mon, 02 Jan 2006 15:04:05"))
+	// }
 }
 
 func (lists *Lists) AddContent(content string) {
 	list := List{Content: content, Date: time.Now().Unix()}
 	lists.Lists = append(lists.Lists, list)
 
-	addToFile()
+	lists.addToFile()
 }
-func addToFile() {
-	res, _ := json.Marshal(Lst)
+
+func (lists Lists) addToFile() {
+	res, _ := json.Marshal(lists)
 
 	_ = ioutil.WriteFile(FILENAME, res, 0666)
 }
@@ -66,7 +87,7 @@ func (lists *Lists) Done(value int) {
 		fmt.Println("Please enter a valid no")
 	} else {
 		Lst.Lists[value-1].Done = true
-		addToFile()
+		lists.addToFile()
 	}
 }
 
@@ -75,7 +96,7 @@ func (lists *Lists) Undone(value int) {
 		fmt.Println("Please enter a valid no")
 	} else {
 		Lst.Lists[value-1].Done = false
-		addToFile()
+		lists.addToFile()
 	}
 }
 
@@ -83,11 +104,11 @@ func (lists *Lists) Cleanup() {
 	for idx, val := range lists.Lists {
 		if val.Done && idx < len(lists.Lists)-1 {
 			lists.Lists = append(lists.Lists[:idx], lists.Lists[idx+1:]...)
-		} else if val.Done && idx == len(lists.Lists)-1{
+		} else if val.Done && idx == len(lists.Lists)-1 {
 			lists.Lists = lists.Lists[:idx]
 		}
 	}
-	addToFile()
+	lists.addToFile()
 }
 
 // func CliTest() {
@@ -133,9 +154,6 @@ func (lists *Lists) Cleanup() {
 
 // 			}
 // 	}
-	
-
-	
 
 // 	// fmt.Printf("%T",inp)
 // }
