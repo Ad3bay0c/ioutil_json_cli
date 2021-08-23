@@ -21,19 +21,28 @@ type Lists struct {
 	Lists []List	`json:"lists"`
 }
 
-var Lst = Lists{}
+//var Lst = Lists{}
 
-func init() {
-	loadTodoList()
-}
+func (lists Lists) DoneList() {
+	tempString := "{{with .Lists}}{{range $idx, $list := .}}{{if $list.Done}}"
+	//tempString += "{{increment $idx}}. {{$list.Content}} - {{date $list.Data}}"
+	tempString += "{{increment $idx}}. {{$list.Content}}\n"
+	tempString += "{{end}}{{end}}{{end}}"
 
-func loadTodoList() {
-	file, err := ioutil.ReadFile("file.csv")
+	t := template.Must(template.New("UndoneList").Funcs(funcMap).Parse(tempString))
+	err := t.Execute(os.Stdout, lists)
 	if err != nil {
 		panic(err)
 	}
+}
 
-	_ = json.Unmarshal(file, &Lst)
+var funcMap = template.FuncMap{
+	"increment": func(i int) int {
+		return i + 1
+	},
+	"date": func(timeInt int64) string {
+		return time.Unix(timeInt, 0).Format("Mon, 02 Jan 2006 15:04:05")
+	},
 }
 
 func (lists Lists) All() {
@@ -42,19 +51,13 @@ func (lists Lists) All() {
 		fmt.Println("Empty List, Please Add Content")
 	}
 
-	funcMap := template.FuncMap{
-		"increment": func(i int) int {
-			return i + 1
-		},
-		"date": func(timeInt int64) string {
-			return time.Unix(timeInt, 0).Format("Mon, 02 Jan 2006 15:04:05")
-		},
-	}
+
 	todoTmpl := "{{with .Lists}}{{range $idx, $todo := .}}"
 
 	todoTmpl += "{{if $todo.Done}}{{else}}"
 
-	todoTmpl += "{{increment $idx }}. {{ $todo.Content}} - ({{date $todo.Date}})\n"
+	//todoTmpl += "{{increment $idx }}. {{ $todo.Content}} - ({{date $todo.Date}})\n"
+	todoTmpl += "{{increment $idx }}. {{ $todo.Content}}\n"
 	todoTmpl += "{{end}}{{end}}{{end}}"
 
 	tmpl := template.Must(template.New("todo").Funcs(funcMap).Parse(todoTmpl))
@@ -86,7 +89,7 @@ func (lists *Lists) Done(value int) {
 	if len(lists.Lists) < value {
 		fmt.Println("Please enter a valid no")
 	} else {
-		Lst.Lists[value-1].Done = true
+		lists.Lists[value-1].Done = true
 		lists.addToFile()
 	}
 }
@@ -95,7 +98,7 @@ func (lists *Lists) Undone(value int) {
 	if len(lists.Lists) < value {
 		fmt.Println("Please enter a valid no")
 	} else {
-		Lst.Lists[value-1].Done = false
+		lists.Lists[value-1].Done = false
 		lists.addToFile()
 	}
 }
