@@ -1,70 +1,19 @@
 package main
 
-import "github.com/Ad3bay0c/week4Curriculum/cli"
-
-// "fmt"
-
-// "github.com/Ad3bay0c/week4Curriculum/io_package"
-// "github.com/Ad3bay0c/week4Curriculum/json"
+import "github.com/Ad3bay0c/week4Curriculum/linkedlist"
 
 func main() {
-	// Json
-	// json.Encrypt()
+	//cmd.Execute()
 
-	// json.Encode2()
 
-	// json.EncodeUsingMap()
+	linkedlist.SinglyListTestingCases()
 
-	// json.Decode()
-	// IO
-	// io_package.IoTesting()
-	// io_package.IoPipeTesting()
-	// io_package.InputReader()
+	//t := time.Now()
+	//t2 := t.AddDate(2, 0, 0)
+	//
+	//t3 := t2.Unix() * 24 * 60 * 60
+	//fmt.Println(t, t2, t3)
+	////t4, _ := time.Parse(time.RFC1123, "3 days")
+	//fmt.Println(time.Unix(t3, 0).Format(time.RFC1123))
 
-	// cli.Lst.All()
-	// // lst := cli.List{Content: "Read my curriculum"}
-
-	// cli.Lst.AddContent("Read Working with Json")
-	// cli.Lst.AddContent("Read my Curriculum")
-	// cli.Lst.AddContent("Solve little Algorithm")
-	// cli.Lst.AddContent("Review my Weekly Task")
-
-	// cli.Lst.All()
-	// fmt.Println("............Adding Content......")
-
-	// time.Sleep(time.Second * 2)
-	// cli.Lst.AddContent("Continue with the curriculum")
-	// cli.Lst.AddContent("Write a sample Task")
-	// cli.Lst.All()
-
-	// fmt.Println("............Testing Done......")
-
-	// time.Sleep(time.Second * 2)
-	// cli.Lst.Done(2)
-	// cli.Lst.Done(1)
-	// cli.Lst.All()
-
-	// fmt.Println("............Testing Undone........")
-	// cli.Lst.Undone(1)
-	// cli.Lst.Undone(3)
-	// cli.Lst.Undone(4)
-
-	// cli.Lst.All()
-
-	// time.Sleep(time.Second * 2)
-
-	// fmt.Println("............Testing Clean Up........")
-	// cli.Lst.Done(4)
-	// time.Sleep(time.Second * 1)
-	cli.Lst.Cleanup()
-
-	cli.Lst.All()
-
-	// cli.CliTest()
-
-	// files.File()
-
-	// temp.TemplateT()
-
-	// template_package.TemplateTesting()
 }
