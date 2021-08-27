@@ -12,6 +12,9 @@ func IoTesting() {
 	r := strings.NewReader("Okay testing IO Package\n")
 
 	_, e := io.Copy(os.Stdout, r)
+	//resp, _ := http.Get("http://www.gutenberg.org/files/18581/18581.txt")
+	//defer resp.Body.Close()
+	//n, _ := io.Copy(out, resp.Body)
 
 	if e != nil {
 		fmt.Println(e)
