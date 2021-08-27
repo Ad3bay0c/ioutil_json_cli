@@ -104,15 +104,19 @@ func (lists *Lists) Undone(value int) {
 }
 
 func (lists *Lists) Cleanup() {
-	for idx, val := range lists.Lists {
-		if val.Done && idx < len(lists.Lists)-1 {
+	//for idx, val := range lists.Lists {
+	for idx:=0; idx < len(lists.Lists); idx++{
+		if lists.Lists[idx].Done && idx < len(lists.Lists)-1 {
 			lists.Lists = append(lists.Lists[:idx], lists.Lists[idx+1:]...)
-		} else if val.Done && idx == len(lists.Lists)-1 {
+			idx -= 1
+		} else if lists.Lists[idx].Done && idx == len(lists.Lists)-1 {
 			lists.Lists = lists.Lists[:idx]
 		}
 	}
 	lists.addToFile()
+
 }
+
 
 // func CliTest() {
 
