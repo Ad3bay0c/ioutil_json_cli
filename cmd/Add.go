@@ -27,6 +27,8 @@ var AddCmd = &cobra.Command{
 	Use:   "Add",
 	Short: "Add Task to Todo lIsts",
 	Long: `Add Task to the Todo Lists`,
+	Example: `Add "I need to run my cobra code"`,
+
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0{
 			fmt.Println("Please Enter a valid Task")
