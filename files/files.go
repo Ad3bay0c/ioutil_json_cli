@@ -20,6 +20,7 @@ func File() {
 	// defer resp.Body.Close()
 
 	// n, _ := io.Copy(out, resp.Body)
+	// fmt.Println(n)
 
 	// Create Directory, Remove, and Rename
 
