@@ -22,7 +22,7 @@ func TimeTesting() {
 	fmt.Println(tString)
 
 	t3, _ := time.ParseDuration("14h12m5s")
-	fmt.Println(t3.Truncate(time.Hour)) // Truncate return multiple of m
+	fmt.Println(t3.Truncate(8 * time.Minute)) // Truncate return multiple of m
 	//_ = time.Now().Date() // returns current year, month, and day
 
 	currentDate := time.Date(2019, time.November, 18, 01, 0, 0, 0, time.UTC)
@@ -37,4 +37,9 @@ func TimeTesting() {
 
 	year, week := time.Now().ISOWeek()
 	fmt.Println(year, week)
+	fmt.Println(t3.Round(8 * time.Minute))
+
+	fmt.Println(time.Now().Day())
+	fmt.Println(time.Now().Weekday())
+	fmt.Println(time.Now().YearDay())
 }
