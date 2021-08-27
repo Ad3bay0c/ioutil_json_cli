@@ -1,5 +1,0 @@
-package dateandtime
-
-func TimeTesting() {
-	
-}
